@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ella's official link page</title>
+  <meta name="description" content="All my social links in one place." />
+
+  <!-- Favicon (optional) -->
+  <link rel="icon" href="https://emojiisland.com/cdn/shop/products/2618_large.png" />
+
+  <style>
+    /* ---------- THEME VARIABLES (edit these to re-skin) ---------- */
+    :root {
+      --bg-1: #0f0c29;
+      --bg-2: #302b63;
+      --bg-3: #24243e;
+      --card-bg: rgba(255, 255, 255, 0.08);
+      --card-border: rgba(255, 255, 255, 0.18);
+      --text: #ffffff;
+      --muted: #c9c9d6;
+      --accent: #ff7a59;
+      --accent-2: #7f5af0;
+      --btn-bg: rgba(255, 255, 255, 0.12);
+      --btn-hover: rgba(255, 255, 255, 0.22);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+      background-size: 300% 300%;
+      animation: bgShift 18s ease infinite;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    @keyframes bgShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 48px 20px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    /* ---------- PROFILE CARD ---------- */
+    .profile {
+      text-align: center;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 32px 24px;
+      width: 100%;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--accent);
+      box-shadow: 0 0 0 4px rgba(255, 122, 89, 0.25),
+                  0 10px 25px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease;
+    }
+    .avatar:hover { transform: scale(1.05) rotate(-2deg); }
+
+    .name {
+      margin-top: 18px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .handle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    .bio {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.55;
+      max-width: 340px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ---------- LINKS ---------- */
+    .links {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--btn-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 0;
+    }
+    .link-btn:hover::before { opacity: 0.35; }
+    .link-btn:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .link-btn .emoji,
+    .link-btn .label { position: relative; z-index: 1; }
+
+    .link-btn .emoji {
+      font-size: 1.5rem;
+      width: 36px;
+      text-align: center;
+    }
+
+    .link-btn .label { flex: 1; }
+
+    .link-btn .arrow {
+      opacity: 0.6;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .link-btn:hover .arrow {
+      transform: translateX(4px);
+      opacity: 1;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-align: center;
+      opacity: 0.75;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 400px) {
+      .avatar { width: 120px; height: 120px; }
+      .name { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="container">
+
+    <!-- ============ PROFILE CARD ============ -->
+    <section class="profile">
+      <!-- Replace src with your own photo (local file like "me.jpg" or a URL) -->
+      <img
+        class="avatar"
+        src="images/Ella_Langley_2026_(cropped).jpg"
+        alt="Ella langley's profile picture"
+      />
+
+      <h1 class="name">Ella langley</h1>
+      <p class="handle">@ellahandle</p>
+      <p class="bio">
+        👋 Hey there! I'm your favorite country artist and song writer.
+        Welcome to my little corner of the internet — connect with me anywhere below!
+      </p>
+    </section>
+
+    <!-- ============ SOCIAL / CHAT LINKS ============ -->
+    <nav class="links" aria-label="Social links">
+
+      <!-- WhatsApp chat link (replace phone number, no + or spaces) -->
+      <a class="link-btn" href="https://wa.me/+14382660117" target="_blank" rel="noopener">
+        <span class="emoji">💬</span>
+        <span class="label">Chat on WhatsApp</span>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- Instagram
+      <a class="link-btn" href="https://instagram.com/yourhandle" target="_blank" rel="noopener">
+        <span class="emoji">📸</span>
+        <span class="label">Instagram</span>
+        <span class="arrow">→</span>
+      </a> -->
+
+      <!-- Facebook Messenger -->
+      <!-- <a class="link-btn" href="https://m.me/yourhandle" target="_blank" rel="noopener">
+        <span class="emoji">💙</span>
+        <span class="label">Message on Messenger</span>
+        <span class="arrow">→</span>
+      </a> -->
+
+      <!-- Telegram -->
+      <a class="link-btn" href="https://t.me/Privateacc1230" target="_blank" rel="noopener">
+        <span class="emoji">✈️</span>
+        <span class="label">Telegram</span>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- TikTok -->
+      <a class="link-btn" href="https://tiktok.com/@rileyg795" target="_blank" rel="noopener">
+        <span class="emoji">🎵</span>
+        <span class="label">TikTok</span>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- YouTube
+      <a class="link-btn" href="https://youtube.com/@yourhandle" target="_blank" rel="noopener">
+        <span class="emoji">▶️</span>
+        <span class="label">YouTube</span>
+        <span class="arrow">→</span>
+      </a> -->
+
+      <!-- Email -->
+      <a class="link-btn" href="mailto:frankportervilla@gmail.com">
+        <span class="emoji">✉️</span>
+        <span class="label">Email Me</span>
+        <span class="arrow">→</span>
+      </a>
+
+    </nav>
+
+    <footer>
+      Made with ❤️ by <a href="#">Your Name</a> · © 2026
+    </footer>
+
+  </main>
+
+</body>
+</html>
