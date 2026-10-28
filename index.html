@@ -3,14 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ella's official link page</title>
-  <meta name="description" content="All my social links in one place." />
-
-  <!-- Favicon (optional) -->
-  <link rel="icon" href="https://emojiisland.com/cdn/shop/products/2618_large.png" />
-
+  <title>LinkHub - Your Profile in One Place</title>
   <style>
-    /* ---------- THEME VARIABLES (edit these to re-skin) ---------- */
+    /* ---------- THEME VARIABLES ---------- */
     :root {
       --bg-1: #0f0c29;
       --bg-2: #302b63;
@@ -23,12 +18,14 @@
       --accent-2: #7f5af0;
       --btn-bg: rgba(255, 255, 255, 0.12);
       --btn-hover: rgba(255, 255, 255, 0.22);
+      --input-bg: rgba(0, 0, 0, 0.25);
+      --input-border: rgba(255, 255, 255, 0.15);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body {
-      min-height: 100%;
+      min-height: 100vh;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       color: var(--text);
       background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
@@ -44,7 +41,7 @@
     }
 
     .container {
-      max-width: 480px;
+      max-width: 520px;
       margin: 0 auto;
       padding: 48px 20px 32px;
       display: flex;
@@ -53,9 +50,8 @@
       gap: 24px;
     }
 
-    /* ---------- PROFILE CARD ---------- */
-    .profile {
-      text-align: center;
+    /* ---------- GLASS CARD ---------- */
+    .glass-card {
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       background: var(--card-bg);
@@ -66,15 +62,18 @@
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
     }
 
+    /* ---------- PROFILE STYLES ---------- */
     .avatar {
       width: 140px;
       height: 140px;
       border-radius: 50%;
       object-fit: cover;
       border: 4px solid var(--accent);
-      box-shadow: 0 0 0 4px rgba(255, 122, 89, 0.25),
-                  0 10px 25px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 0 0 4px rgba(255, 122, 89, 0.25), 0 10px 25px rgba(0, 0, 0, 0.4);
       transition: transform 0.3s ease;
+      display: block;
+      margin: 0 auto;
+      background-color: rgba(255,255,255,0.1);
     }
     .avatar:hover { transform: scale(1.05) rotate(-2deg); }
 
@@ -83,12 +82,14 @@
       font-size: 1.6rem;
       font-weight: 700;
       letter-spacing: 0.3px;
+      text-align: center;
     }
 
     .handle {
       color: var(--muted);
       font-size: 0.95rem;
       margin-top: 4px;
+      text-align: center;
     }
 
     .bio {
@@ -99,6 +100,7 @@
       max-width: 340px;
       margin-left: auto;
       margin-right: auto;
+      text-align: center;
     }
 
     /* ---------- LINKS ---------- */
@@ -143,27 +145,173 @@
       border-color: rgba(255, 255, 255, 0.35);
     }
 
-    .link-btn .emoji,
-    .link-btn .label { position: relative; z-index: 1; }
-
-    .link-btn .emoji {
-      font-size: 1.5rem;
-      width: 36px;
-      text-align: center;
-    }
-
+    .link-btn .emoji, .link-btn .label, .link-btn .arrow { position: relative; z-index: 1; }
+    .link-btn .emoji { font-size: 1.5rem; width: 36px; text-align: center; }
     .link-btn .label { flex: 1; }
+    .link-btn .arrow { opacity: 0.6; transition: transform 0.2s ease, opacity 0.2s ease; }
+    .link-btn:hover .arrow { transform: translateX(4px); opacity: 1; }
 
-    .link-btn .arrow {
-      opacity: 0.6;
-      transition: transform 0.2s ease, opacity 0.2s ease;
+    /* ---------- FORM STYLES ---------- */
+    .form-group { margin-bottom: 16px; text-align: left; }
+    .form-group label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px; font-weight: 600; }
+    
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s ease;
     }
-    .link-btn:hover .arrow {
-      transform: translateX(4px);
-      opacity: 1;
+    .form-input:focus { border-color: var(--accent); }
+    .form-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+    .form-input[type="file"] { padding: 10px; font-size: 0.9rem; }
+
+    .btn-primary {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      margin-top: 8px;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+    
+    .btn-secondary {
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      margin-top: 8px;
+    }
+    .btn-secondary:hover { background: var(--btn-bg); }
+
+    /* ---------- LINK ROW & TOGGLE ---------- */
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.15);
+      padding: 10px;
+      border-radius: 14px;
+      border: 1px solid var(--input-border);
+    }
+    .link-platform-select { flex: 1 1 130px; padding: 10px; font-size: 0.9rem; }
+    .link-url { flex: 2 1 200px; padding: 10px; font-size: 0.9rem; }
+    
+    .toggle-switch {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 28px;
+      flex: 0 0 50px;
+    }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(255, 255, 255, 0.2);
+      transition: .4s;
+      border-radius: 28px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider { background-color: var(--accent); }
+    input:checked + .slider:before { transform: translateX(22px); }
+
+    .btn-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 50, 50, 0.15);
+      border: 1px solid rgba(255, 50, 50, 0.3);
+      border-radius: 10px;
+      color: #ff6b6b;
+      cursor: pointer;
+      transition: background 0.2s;
+      flex: 0 0 40px;
+      font-size: 1.1rem;
+    }
+    .btn-icon:hover { background: rgba(255, 50, 50, 0.3); }
+
+    .tabs {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 8px;
+    }
+    .tab {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 8px 0;
+      position: relative;
+    }
+    .tab.active { color: var(--text); }
+    .tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -9px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
     }
 
-    /* ---------- FOOTER ---------- */
+    .hidden { display: none !important; }
+    
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--accent);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
     footer {
       margin-top: 16px;
       color: var(--muted);
@@ -176,89 +324,428 @@
     @media (max-width: 400px) {
       .avatar { width: 120px; height: 120px; }
       .name { font-size: 1.4rem; }
+      .link-row { flex-direction: column; align-items: stretch; }
+      .toggle-switch { align-self: flex-start; margin-top: 4px; }
+      .btn-icon { align-self: flex-end; margin-top: -36px; }
     }
   </style>
 </head>
 <body>
 
-  <main class="container">
+  <div id="app" class="container">
+    <!-- Content injected by JS -->
+  </div>
 
-    <!-- ============ PROFILE CARD ============ -->
-    <section class="profile">
-      <!-- Replace src with your own photo (local file like "me.jpg" or a URL) -->
-      <img
-        class="avatar"
-        src="images/Ella_Langley_2026_(cropped).jpg"
-        alt="Ella langley's profile picture"
-      />
+  <div id="toast" class="toast">Action Successful!</div>
 
-      <h1 class="name">Ella langley</h1>
-      <p class="handle">@ellahandle</p>
-      <p class="bio">
-        👋 Hey there! I'm your favorite country artist and song writer.
-        Welcome to my little corner of the internet — connect with me anywhere below!
-      </p>
-    </section>
+  <script>
+    // --- DATA MANAGEMENT ---
+    const DB_KEY = 'linkhub_users';
+    
+    function getDB() {
+      const data = localStorage.getItem(DB_KEY);
+      if (!data) {
+        const initial = {
+          demo: {
+            password: "demo",
+            name: "Ella Langley",
+            handle: "@ellahandle",
+            bio: "👋 Hey there! I'm your favorite country artist and songwriter. Welcome to my little corner of the internet — connect with me anywhere below!",
+            avatar: "https://emojiisland.com/cdn/shop/products/2618_large.png",
+            links: [
+              { platform: "WhatsApp", url: "https://wa.me/14382660117", emoji: "💬", isActive: true },
+              { platform: "Telegram", url: "https://t.me/Privateacc1230", emoji: "✈️", isActive: true },
+              { platform: "Instagram", url: "https://instagram.com/yourhandle", emoji: "📸", isActive: false },
+              { platform: "Email", url: "mailto:frankportervilla@gmail.com", emoji: "✉️", isActive: true }
+            ]
+          }
+        };
+        localStorage.setItem(DB_KEY, JSON.stringify(initial));
+        return initial;
+        }
+      return JSON.parse(data);
+    }
 
-    <!-- ============ SOCIAL / CHAT LINKS ============ -->
-    <nav class="links" aria-label="Social links">
+    function saveDB(db) {
+      localStorage.setItem(DB_KEY, JSON.stringify(db));
+    }
 
-      <!-- WhatsApp chat link (replace phone number, no + or spaces) -->
-      <a class="link-btn" href="https://wa.me/+14382660117" target="_blank" rel="noopener">
-        <span class="emoji">💬</span>
-        <span class="label">Chat on WhatsApp</span>
-        <span class="arrow">→</span>
-      </a>
+    function getCurrentUser() {
+      return localStorage.getItem('linkhub_current_user');
+    }
 
-      <!-- Instagram
-      <a class="link-btn" href="https://instagram.com/yourhandle" target="_blank" rel="noopener">
-        <span class="emoji">📸</span>
-        <span class="label">Instagram</span>
-        <span class="arrow">→</span>
-      </a> -->
+    function setCurrentUser(username) {
+      if (username) localStorage.setItem('linkhub_current_user', username);
+      else localStorage.removeItem('linkhub_current_user');
+    }
 
-      <!-- Facebook Messenger -->
-      <!-- <a class="link-btn" href="https://m.me/yourhandle" target="_blank" rel="noopener">
-        <span class="emoji">💙</span>
-        <span class="label">Message on Messenger</span>
-        <span class="arrow">→</span>
-      </a> -->
+    // --- ROUTING ---
+    const urlParams = new URLSearchParams(window.location.search);
+    const viewUser = urlParams.get('u');
 
-      <!-- Telegram -->
-      <a class="link-btn" href="https://t.me/Privateacc1230" target="_blank" rel="noopener">
-        <span class="emoji">✈️</span>
-        <span class="label">Telegram</span>
-        <span class="arrow">→</span>
-      </a>
+    function init() {
+      getDB(); // Initialize DB if empty
+      if (viewUser) {
+        renderPublicProfile(viewUser);
+      } else {
+        const user = getCurrentUser();
+        if (user) renderDashboard(user);
+        else renderAuth();
+      }
+    }
 
-      <!-- TikTok -->
-      <a class="link-btn" href="https://tiktok.com/@rileyg795" target="_blank" rel="noopener">
-        <span class="emoji">🎵</span>
-        <span class="label">TikTok</span>
-        <span class="arrow">→</span>
-      </a>
+    // --- RENDER: AUTH ---
+    function renderAuth() {
+      const app = document.getElementById('app');
+      app.innerHTML = `
+        <div class="glass-card">
+          <div class="tabs">
+            <button class="tab active" onclick="switchTab('login')">Login</button>
+            <button class="tab" onclick="switchTab('register')">Register</button>
+            <button class="tab" onclick="switchTab('reset')">Reset Demo</button>
+          </div>
 
-      <!-- YouTube
-      <a class="link-btn" href="https://youtube.com/@yourhandle" target="_blank" rel="noopener">
-        <span class="emoji">▶️</span>
-        <span class="label">YouTube</span>
-        <span class="arrow">→</span>
-      </a> -->
+          <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+              <label>Username</label>
+              <input type="text" name="username" class="form-input" required placeholder="e.g., ella">
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" name="password" class="form-input" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn-primary">Log In</button>
+            <button type="button" class="btn-secondary" onclick="fillDemo()">Try Demo Account</button>
+          </form>
 
-      <!-- Email -->
-      <a class="link-btn" href="mailto:frankportervilla@gmail.com">
-        <span class="emoji">✉️</span>
-        <span class="label">Email Me</span>
-        <span class="arrow">→</span>
-      </a>
+          <form id="registerForm" class="hidden" onsubmit="handleRegister(event)">
+            <div class="form-group">
+              <label>Username</label>
+              <input type="text" name="username" class="form-input" required placeholder="Choose a unique username">
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" name="password" class="form-input" required placeholder="Create a password">
+            </div>
+            <button type="submit" class="btn-primary">Create Account</button>
+          </form>
+          
+          <div id="resetForm" class="hidden">
+             <p style="color:var(--muted); font-size:0.9rem; margin-bottom:16px; text-align:center;">This will delete all local data and restore the demo account.</p>
+             <button onclick="resetData()" class="btn-primary" style="background: linear-gradient(90deg, #ff4b4b, #ff7a59);">Reset All Data</button>
+          </div>
+        </div>
+        <footer>
+          Made with ❤️ by LinkHub · © 2024
+        </footer>
+      `;
+    }
 
-    </nav>
+    function switchTab(tab) {
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(t => t.classList.remove('active'));
+      if (tab === 'login') {
+        tabs[0].classList.add('active');
+        document.getElementById('loginForm').classList.remove('hidden');
+        document.getElementById('registerForm').classList.add('hidden');
+        document.getElementById('resetForm').classList.add('hidden');
+      } else if (tab === 'register') {
+        tabs[1].classList.add('active');
+        document.getElementById('loginForm').classList.add('hidden');
+        document.getElementById('registerForm').classList.remove('hidden');
+        document.getElementById('resetForm').classList.add('hidden');
+      } else {
+        tabs[2].classList.add('active');
+        document.getElementById('loginForm').classList.add('hidden');
+        document.getElementById('registerForm').classList.add('hidden');
+        document.getElementById('resetForm').classList.remove('hidden');
+      }
+    }
 
-    <footer>
-      Made with ❤️ by <a href="#">Your Name</a> · © 2026
-    </footer>
+    function fillDemo() {
+      document.querySelector('#loginForm [name="username"]').value = 'demo';
+      document.querySelector('#loginForm [name="password"]').value = 'demo';
+    }
+    
+    function resetData() {
+      localStorage.removeItem(DB_KEY);
+      localStorage.removeItem('linkhub_current_user');
+      showToast('Data reset! Reloading...');
+      setTimeout(() => location.reload(), 1000);
+    }
 
-  </main>
+    function handleLogin(e) {
+      e.preventDefault();
+      const username = e.target.username.value.toLowerCase().trim();
+      const password = e.target.password.value;
+      const db = getDB();
 
+      if (db[username] && db[username].password === password) {
+        setCurrentUser(username);
+        showToast('Logged in successfully!');
+        renderDashboard(username);
+      } else {
+        showToast('Invalid username or password');
+      }
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const username = e.target.username.value.toLowerCase().trim();
+      const password = e.target.password.value;
+      const db = getDB();
+
+      if (db[username]) {
+        showToast('Username already taken!');
+        return;
+      }
+
+      db[username] = {
+        password: password,
+        name: username,
+        handle: '@' + username,
+        bio: "Hi! Welcome to my link page.",
+        avatar: "https://emojiisland.com/cdn/shop/products/2618_large.png",
+        links: []
+      };
+      saveDB(db);
+      setCurrentUser(username);
+      showToast('Account created!');
+      renderDashboard(username);
+    }
+
+    // --- RENDER: DASHBOARD ---
+    const platforms = [
+      { name: 'WhatsApp', emoji: '💬', placeholder: 'https://wa.me/1234567890' },
+      { name: 'Telegram', emoji: '✈️', placeholder: 'https://t.me/username' },
+      { name: 'Instagram', emoji: '📸', placeholder: 'https://instagram.com/username' },
+      { name: 'Facebook Messenger', emoji: '💙', placeholder: 'https://m.me/username' },
+      { name: 'X (Twitter)', emoji: '🐦', placeholder: 'https://x.com/username' },
+      { name: 'TikTok', emoji: '🎵', placeholder: 'https://tiktok.com/@username' },
+      { name: 'Snapchat', emoji: '👻', placeholder: 'https://snapchat.com/add/username' },
+      { name: 'LinkedIn', emoji: '💼', placeholder: 'https://linkedin.com/in/username' },
+      { name: 'Email', emoji: '✉️', placeholder: 'mailto:email@example.com' },
+      { name: 'Custom', emoji: '🔗', placeholder: 'https://...' }
+    ];
+
+    function renderDashboard(username) {
+      const db = getDB();
+      const user = db[username];
+      const profileUrl = `${window.location.origin}${window.location.pathname}?u=${username}`;
+
+      const app = document.getElementById('app');
+      app.innerHTML = `
+        <div class="glass-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2 style="font-size:1.2rem; font-weight:700;">Dashboard</h2>
+            <button onclick="logout()" style="background:none; border:none; color:var(--muted); cursor:pointer; font-size:0.9rem;">Logout</button>
+          </div>
+
+          <div class="form-group" style="text-align:center;">
+            <img id="avatarPreview" class="avatar" src="${user.avatar}" style="width:100px; height:100px; margin-bottom:12px;" onerror="this.src='https://emojiisland.com/cdn/shop/products/2618_large.png'"/>
+            <label class="btn-secondary" style="display:inline-block; width:auto; padding:8px 16px; cursor:pointer; margin:0;">
+              📷 Upload Profile Picture
+              <input type="file" id="avatarFile" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label>Display Name</label>
+            <input type="text" id="name" class="form-input" value="${user.name}" placeholder="Your Name">
+          </div>
+          <div class="form-group">
+            <label>Handle</label>
+            <input type="text" id="handle" class="form-input" value="${user.handle}" placeholder="@username">
+          </div>
+          <div class="form-group">
+            <label>Bio</label>
+            <textarea id="bio" class="form-input" rows="3" placeholder="Tell people about yourself...">${user.bio}</textarea>
+          </div>
+
+          <div style="margin-top:24px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+            <label style="font-size:0.95rem; font-weight:700;">Social Links</label>
+            <button onclick="addLinkRow()" class="btn-secondary" style="width:auto; margin:0; padding:6px 12px; font-size:0.85rem;">+ Add Link</button>
+          </div>
+          
+          <div id="linksContainer">
+            ${user.links.map((link, index) => renderLinkRow(link, index)).join('')}
+          </div>
+
+          <button onclick="saveProfile('${username}')" class="btn-primary" style="margin-top:24px;">Save Changes</button>
+          
+          <div style="margin-top:24px; padding-top:24px; border-top:1px solid var(--card-border); text-align:center;">
+            <p style="color:var(--muted); font-size:0.9rem; margin-bottom:12px;">Your Public Profile Link</p>
+            <div style="display:flex; gap:8px;">
+              <input type="text" class="form-input" value="${profileUrl}" readonly id="profileUrlInput" style="font-size:0.85rem;">
+              <button onclick="copyLink()" class="btn-primary" style="width:auto; margin:0; padding:0 16px;">Copy</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderLinkRow(link, index) {
+      const options = platforms.map(p => 
+        `<option value="${p.name}" data-emoji="${p.emoji}" data-placeholder="${p.placeholder}" ${link.platform === p.name ? 'selected' : ''}>${p.emoji} ${p.name}</option>`
+      ).join('');
+      
+      const currentPlatform = platforms.find(p => p.name === link.platform) || platforms[9];
+
+      return `
+        <div class="link-row" data-index="${index}">
+          <select class="form-input link-platform-select" onchange="updatePlaceholder(this)">
+            ${options}
+          </select>
+          <input type="text" class="form-input link-url" value="${link.url}" placeholder="${currentPlatform.placeholder}">
+          
+          <label class="toggle-switch" title="Show/Hide on public profile">
+            <input type="checkbox" class="link-active" ${link.isActive !== false ? 'checked' : ''}>
+            <span class="slider"></span>
+          </label>
+          
+          <button class="btn-icon" onclick="removeLinkRow(this)" title="Remove link">🗑</button>
+        </div>
+      `;
+    }
+
+    function updatePlaceholder(select) {
+      const selectedOption = select.options[select.selectedIndex];
+      const placeholder = selectedOption.getAttribute('data-placeholder');
+      const urlInput = select.parentElement.querySelector('.link-url');
+      urlInput.placeholder = placeholder;
+    }
+
+    function handleAvatarUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        if (file.size > 2 * 1024 * 1024) {
+          showToast('Image is too large! Please use an image under 2MB.');
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('avatarPreview').src = e.target.result;
+          window.tempAvatar = e.target.result; // Store temporarily for save
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function addLinkRow() {
+      const container = document.getElementById('linksContainer');
+      const div = document.createElement('div');
+      div.innerHTML = renderLinkRow({ platform: 'Custom', url: '', emoji: '🔗', isActive: true }, -1);
+      container.appendChild(div.firstElementChild);
+    }
+
+    function removeLinkRow(btn) {
+      btn.closest('.link-row').remove();
+    }
+
+    function saveProfile(username) {
+      const db = getDB();
+      const user = db[username];
+      
+      // Use uploaded image if available, otherwise keep existing
+      if (window.tempAvatar) {
+        user.avatar = window.tempAvatar;
+        window.tempAvatar = null; // Clear after save
+      }
+      
+      user.name = document.getElementById('name').value;
+      user.handle = document.getElementById('handle').value;
+      user.bio = document.getElementById('bio').value;
+      
+      const rows = document.querySelectorAll('.link-row');
+      user.links = [];
+      rows.forEach(row => {
+        const select = row.querySelector('.link-platform-select');
+        const platform = select.value;
+        const emoji = select.options[select.selectedIndex].dataset.emoji;
+        const url = row.querySelector('.link-url').value;
+        const isActive = row.querySelector('.link-active').checked;
+        
+        if (url.trim()) {
+          user.links.push({ platform, url, emoji, isActive });
+        }
+      });
+
+      saveDB(db);
+      showToast('Profile saved successfully!');
+    }
+
+    function copyLink() {
+      const input = document.getElementById('profileUrlInput');
+      input.select();
+      navigator.clipboard.writeText(input.value).then(() => {
+        showToast('Link copied to clipboard!');
+      });
+    }
+
+    function logout() {
+      setCurrentUser(null);
+      window.tempAvatar = null;
+      renderAuth();
+    }
+
+    // --- RENDER: PUBLIC PROFILE ---
+    function renderPublicProfile(username) {
+      const db = getDB();
+      const user = db[username];
+      const app = document.getElementById('app');
+
+      if (!user) {
+        app.innerHTML = `
+          <div class="glass-card" style="text-align:center; padding:48px 24px;">
+            <h1 style="font-size:1.5rem; margin-bottom:12px;">Profile Not Found</h1>
+            <p style="color:var(--muted); margin-bottom:24px;">The user "${username}" does not exist.</p>
+            <a href="${window.location.pathname}" class="btn-primary" style="display:inline-block; width:auto; padding:12px 24px; text-decoration:none;">Go Home</a>
+          </div>
+        `;
+        return;
+      }
+
+      // ONLY show links where isActive is true (or undefined, for backward compatibility)
+      const linksHtml = user.links
+        .filter(link => link.isActive !== false)
+        .map(link => `
+        <a class="link-btn" href="${link.url}" target="_blank" rel="noopener">
+          <span class="emoji">${link.emoji}</span>
+          <span class="label">${link.platform}</span>
+          <span class="arrow">→</span>
+        </a>
+      `).join('');
+
+      app.innerHTML = `
+        <section class="glass-card" style="text-align:center;">
+          <img class="avatar" src="${user.avatar}" alt="${user.name}'s profile picture" onerror="this.src='https://emojiisland.com/cdn/shop/products/2618_large.png'" />
+          <h1 class="name">${user.name}</h1>
+          <p class="handle">${user.handle}</p>
+          <p class="bio">${user.bio}</p>
+        </section>
+
+        <nav class="links" aria-label="Social links">
+          ${linksHtml}
+        </nav>
+
+        <footer>
+          Made with ❤️ by <a href="${window.location.pathname}">LinkHub</a> · © 2024
+        </footer>
+      `;
+    }
+
+    // --- UTILS ---
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // Start App
+    init();
+  </script>
 </body>
 </html>
